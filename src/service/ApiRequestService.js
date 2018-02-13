@@ -24,6 +24,14 @@ export default function ApiRequestService($http) {
   };
 
   /**
+   * getTotalBook - return the number total of authors
+   * OBs - used to calculate how many skips will be set up when create a pagination
+   */
+  this.getTotalBook = () => {
+    return $http.get(`${this.DefaultBookUrl}/count`);
+  };
+
+  /**
    * getAuthorByName - search authors by using its name or lastname
    * @param firstName
    * @param lastName
@@ -48,12 +56,37 @@ export default function ApiRequestService($http) {
     return $http.get(filter);
   };
 
+
+  /**
+   * getBookByName - search Books by using its title
+   * @param firstName
+   * @param lastName
+   * @return {Promise}
+   */
+  this.getBookByName = (title) => {
+    let options = {};
+    if(title){
+      console.log('if');
+      options = {"where": {"title": {"like": `${title}`}}};
+    }
+    // else if(firstName && !lastName){
+    //   console.log('else if');
+    //   options = {"where": {"firstName": {"like": `${firstName}`}} };
+    // } else {
+    //   console.log('else');
+    //   options = {"where": {"lastName": {"like": `${lastName}`}} };
+    // }
+    options = JSON.stringify(options);
+    options = encodeURIComponent(options);
+    const filter = `${this.DefaultBookUrl}?filter=${options}`;
+    return $http.get(filter);
+  };
+
   /**
    * addAuhtor - will create a new instance of author
    * @param options
    */
   this.addAuthor = (options) => {
-    console.log('options', options);
     if(options.id) return $http.put(this.DefaultAuthorURL, options);
     return $http.post(this.DefaultAuthorURL, options);
   };
@@ -74,6 +107,7 @@ export default function ApiRequestService($http) {
    */
   this.addBook = (options) => {
     if(!options);
+    if(options.id) return $http.put(this.DefaultBookUrl, options);
     return $http.post(this.DefaultBookUrl, options);
   };
 

@@ -4,10 +4,10 @@ export default function routes($urlRouterProvider, $stateProvider) {
   $urlRouterProvider.otherwise('/');
 
   $stateProvider
-    .state('about', {
-      url: '/about',
-      template: require('../views/about.html'),
-      controller: 'AboutController'
+    .state('book', {
+      url: '/book',
+      template: require('../views/book/book.html'),
+      controller: 'BookController'
     })
     .state('author', {
       url: '/author',

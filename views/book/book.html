@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">List</li>
-            <li class="breadcrumb-item"><a href="#" ng-click="openModal('#exampleModal')">Add</a></li>
+            <li class="breadcrumb-item"><a href="#" ng-click="onAddBook()">Add</a></li>
         </ol>
     </nav>
     <div class="card">
@@ -11,12 +11,7 @@
                 <input type="text"
                        class="form-control mb-2 mr-sm-2"
                        placeholder="First Name"
-                       ng-model="author.firstName"
-                >
-                <input type="text"
-                       class="form-control"
-                       placeholder="Last Name"
-                       ng-model="author.lastName"
+                       ng-model="book.title"
                 >
 
                 <button type="submit" class="btn btn-primary mb-2">Search</button>
@@ -25,20 +20,17 @@
     </div>
     <table class="table table-bordered m-t-1">
         <thead>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Actions</th>
+        <th>Book Title</th>
+        <th>Actions</th>
         </thead>
         <tbody>
-            <tr ng-repeat="author in authorList">
-                <td>{{author.firstName}}</td>
-                <td>{{author.lastName}}</td>
-                <td>
-                    <button class="btn btn-danger" ng-click="onDelete(author)">Delete</button>
-                    <button class="btn btn-primary" ng-click="onAddNew(author)">Edit</button>
-                    <button class="btn btn-success" ng-click="onAddBook(author)">New Book</button>
-                </td>
-            </tr>
+        <tr ng-repeat="book in bookList">
+            <td>{{book.title}}</td>
+            <td>
+                <button class="btn btn-danger" ng-click="onRemoveAbook(book)">Delete</button>
+                <button class="btn btn-primary" ng-click="onAddBook(book, true)">Edit</button>
+            </td>
+        </tr>
         </tbody>
     </table>
     <nav aria-label="Page navigation example" style="display: flex;">
@@ -79,7 +71,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button ng-disabled="addAuthorForm.$invalid" ng-if="!author" type="button" class="btn btn-success" ng-click="onAddNew()">Save</button>
-                <button ng-if="author" type="button" class="btn btn-success" ng-click="onAddNew(author, true)">Edit</button>
+                <button ng-disabled="addAuthorForm.$valid" ng-if="author" type="button" class="btn btn-success" ng-click="onAddNew(author, true)">Edit</button>
             </div>
         </div>
     </div>
@@ -90,7 +82,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAddBookLabel">Adding a Book to {{author.firstName}}</h5>
+                <h5 class="modal-title" id="modalAddBookLabel">Adding a Book</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -99,50 +91,38 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form action="" name="addBookForm">
-                            <input type="text" class="form-control" required name="firstName" ng-model="state.bookTitle">
+                            <input type="text"
+                                   class="form-control"
+                                   required
+                                   name="title"
+                                   ng-value="book.title"
+                                   ng-model="state.bookTitle">
+                            <p ng-show="addBookForm.title.$invalid && !addBookForm.title.$pristine"></p>
+                            <select name="authorId"
+                                    ng-model="state.author"
+                                    class="form-control"
+                                    ng-change="listBookByAuthor(state.author)"
+                            >
+                                <option ng-repeat="author in authorList" value="{{author.id}}">{{author.firstName}}</option>
+                            </select>
                         </form>
                     </div>
-                    <div class="col-md-12 m-t-1">
-                        <table class="table">
-                            <tbody>
-                                <tr ng-if="bookList.length > 0" ng-repeat="book in bookList">
-                                    <td>{{book.title}}</td>
-                                    <td><button class="btn btn-primary pull-right" ng-click="onRemoveAbook(book)">X</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <div ng-if="bookList.length === 0" class="alert alert-warning" role="alert">
-                            This Author has no book added yet!
-                        </div>
-                    </div>
+                </div>
+                <div class="row">
+                    <table class="tabe">
+                        <tbody>
+                            <tr ng-repeat="authorBook in authorBookList">
+                                <td>{{authorBook.title}}</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button ng-disabled="addBookForm.$invalid" type="button" class="btn btn-primary" ng-click="onAddBook(author, true)">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--modal delete-->
-<div class="modal fade" id="modalDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 ng-if="!book" class="modal-title" >Delete Author</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-               <span ng-if="!book">
-                   Are you sure you want to delete author: <span class="badge badge-secondary">{{author.firstName}}</span>?
-               </span>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button ng-if="!book" type="button" class="btn btn-primary" ng-click="onDelete(author, true)">Delete Author</button>
+                <button ng-if="!book" ng-disabled="addBookForm.$invalid" type="button" class="btn btn-primary" ng-click="onAddBook(true)">Save</button>
+                <button ng-if="book"  type="button" class="btn btn-primary" ng-click="onAddBook(book, true, true)">Edit</button>
             </div>
         </div>
     </div>
