@@ -1,0 +1,17 @@
+.done-true {
+  text-decoration: line-through;
+  color: grey;
+}
+body{
+  margin-top: 100px;
+}
+
+.m-t{
+  &-1{
+    margin-top: 10px;
+  }
+
+  &-3{
+    margin-top: 30px;
+  }
+}

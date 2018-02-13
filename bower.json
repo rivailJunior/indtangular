@@ -1,0 +1,21 @@
+{
+  "name": "indtangular",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "rivailsantos"
+  ],
+  "license": "ISC",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.9",
+    "angular": "angularjs#^1.6.9"
+  }
+}
