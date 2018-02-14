@@ -7,33 +7,36 @@
     </nav>
     <div class="card">
         <div class="card-body">
-            <form class="form-inline" ng-submit="onSearch()">
+            <form class="form-inline">
                 <input type="text"
                        class="form-control mb-2 mr-sm-2"
                        placeholder="First Name"
                        ng-model="book.title"
                 >
-
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                <button ng-click="onSearch()" class="btn btn-primary mb-2">Search</button>
+                <button ng-click="clearSearch()" class="btn btn-default mb-2">Clear</button>
             </form>
         </div>
     </div>
     <table class="table table-bordered m-t-1">
         <thead>
-        <th>Book Title</th>
-        <th>Actions</th>
+            <th>Book Title</th>
+            <th>Actions</th>
         </thead>
         <tbody>
-        <tr ng-repeat="book in bookList">
-            <td>{{book.title}}</td>
-            <td>
-                <button class="btn btn-danger" ng-click="onRemoveAbook(book)">Delete</button>
-                <button class="btn btn-primary" ng-click="onAddBook(book, true)">Edit</button>
-            </td>
-        </tr>
+            <tr ng-repeat="book in bookList" ng-if="bookList.length > 0">
+                <td>{{book.title}}</td>
+                <td>
+                    <button class="btn btn-danger" ng-click="onRemoveAbook(book)">Delete</button>
+                    <button class="btn btn-primary" ng-click="onAddBook(book, true)">Edit</button>
+                </td>
+            </tr>
+            <tr ng-if="bookList.length === 0">
+                <td colspan="2">No result found!</td>
+            </tr>
         </tbody>
     </table>
-    <nav aria-label="Page navigation example" style="display: flex;">
+    <nav aria-label="Page navigation example" style="display: flex;" ng-if="bookList.length > 0">
         <ul class="pagination" ng-repeat="pagBtn in buttonToPaginate">
             <li class="page-item" style="margin-right: 5px"><a class="page-link" ng-click="callPaginationEvent(pagBtn.skip)">{{pagBtn.number}}</a></li>
         </ul>
@@ -100,23 +103,25 @@
                             <p ng-show="addBookForm.title.$invalid && !addBookForm.title.$pristine"></p>
                             <select name="authorId"
                                     ng-model="state.author"
-                                    class="form-control"
+                                    class="form-control m-t-1"
                                     ng-change="listBookByAuthor(state.author)"
                             >
                                 <option ng-repeat="author in authorList" value="{{author.id}}">{{author.firstName}}</option>
                             </select>
                         </form>
                     </div>
-                </div>
-                <div class="row">
-                    <table class="tabe">
-                        <tbody>
-                            <tr ng-repeat="authorBook in authorBookList">
-                                <td>{{authorBook.title}}</td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-md-12 m-t-1" ng-if="authorBookList.length > 0">
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Auhtor Books</div>
+                            <div class="panel-body">
+                                <!-- List group -->
+                                <ul class="list-group">
+                                    <li class="list-group-item" ng-repeat="authorBook in authorBookList">{{authorBook.title}}</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="modal-footer">

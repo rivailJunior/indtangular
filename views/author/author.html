@@ -7,7 +7,7 @@
     </nav>
     <div class="card">
         <div class="card-body">
-            <form class="form-inline" ng-submit="onSearch()">
+            <form class="form-inline" >
                 <input type="text"
                        class="form-control mb-2 mr-sm-2"
                        placeholder="First Name"
@@ -19,7 +19,8 @@
                        ng-model="author.lastName"
                 >
 
-                <button type="submit" class="btn btn-primary mb-2">Search</button>
+                <button ng-click="onSearch()" class="btn btn-primary mb-2">Search</button>
+                <button ng-click="clearSearch()" class="btn btn-default mb-2">Clear</button>
             </form>
         </div>
     </div>
@@ -30,7 +31,7 @@
             <th>Actions</th>
         </thead>
         <tbody>
-            <tr ng-repeat="author in authorList">
+            <tr ng-repeat="author in authorList" ng-if="authorList.length > 0">
                 <td>{{author.firstName}}</td>
                 <td>{{author.lastName}}</td>
                 <td>
@@ -39,9 +40,14 @@
                     <button class="btn btn-success" ng-click="onAddBook(author)">New Book</button>
                 </td>
             </tr>
+            <tr ng-if="authorList.length === 0">
+                <td colspan="3">
+                    No result found!
+                </td>
+            </tr>
         </tbody>
     </table>
-    <nav aria-label="Page navigation example" style="display: flex;">
+    <nav aria-label="Page navigation example" style="display: flex;" ng-if="authorList.length > 0">
         <ul class="pagination" ng-repeat="pagBtn in buttonToPaginate">
             <li class="page-item" style="margin-right: 5px"><a class="page-link" ng-click="callPaginationEvent(pagBtn.skip)">{{pagBtn.number}}</a></li>
         </ul>
@@ -59,22 +65,30 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="" name="addAuthorForm" class="form-horizontal">
-                    <input type="text" class="form-control"
-                           ng-value="author.firstName"
-                           placeholder="First Name"
-                           name="firstName"
-                           required
-                           ng-model="state.firstName">
-                    <p ng-show="addAuthorForm.firstName.$invalid && !addAuthorForm.firstName.$pristine"></p>
-                    <input type="text" class="form-control m-t-1"
-                           ng-value="author.lastName"
-                           name="lastName"
-                           required
-                           placeholder="Last Name"
-                           ng-model="state.lastName">
-                    <p ng-show="addAuthorForm.lastName.$invalid && !addAuthorForm.lastName.$pristine"></p>
-                </form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <form action="" name="addAuthorForm">
+                            <div class="form-group">
+                                <input type="text" class="form-control"
+                                       ng-value="author.firstName"
+                                       placeholder="First Name"
+                                       name="firstName"
+                                       required
+                                       ng-model="state.firstName">
+                                <p ng-show="addAuthorForm.firstName.$invalid && !addAuthorForm.firstName.$pristine"></p>
+                            </div>
+                            <div>
+                                <input type="text" class="form-control"
+                                       ng-value="author.lastName"
+                                       name="lastName"
+                                       required
+                                       placeholder="Last Name"
+                                       ng-model="state.lastName">
+                                <p ng-show="addAuthorForm.lastName.$invalid && !addAuthorForm.lastName.$pristine"></p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -99,18 +113,31 @@
                 <div class="row">
                     <div class="col-md-12">
                         <form action="" name="addBookForm">
-                            <input type="text" class="form-control" required name="firstName" ng-model="state.bookTitle">
+                            <div class="form-group">
+                                <input type="text" placeholder="Book Title" class="form-control" required name="firstName" ng-model="state.bookTitle">
+                            </div>
+                            <div class="form-group">
+                                <button ng-disabled="addBookForm.$invalid" type="button" class="btn btn-primary" ng-click="onAddBook(author, true)">Save</button>
+                            </div>
+
                         </form>
                     </div>
                     <div class="col-md-12 m-t-1">
-                        <table class="table">
-                            <tbody>
-                                <tr ng-if="bookList.length > 0" ng-repeat="book in bookList">
-                                    <td>{{book.title}}</td>
-                                    <td><button class="btn btn-primary pull-right" ng-click="onRemoveAbook(book)">X</button></td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div class="panel panel-default">
+                            <!-- Default panel contents -->
+                            <div class="panel-heading">Auhtor Books</div>
+                            <div class="panel-body">
+                                <!-- List group -->
+                                <table class="table">
+                                    <tbody>
+                                    <tr ng-if="bookList.length > 0" ng-repeat="book in bookList">
+                                        <td>{{book.title}}</td>
+                                        <td><button class="btn btn-primary pull-right" ng-click="onRemoveAbook(book)">X</button></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         <div ng-if="bookList.length === 0" class="alert alert-warning" role="alert">
                             This Author has no book added yet!
                         </div>
@@ -119,7 +146,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button ng-disabled="addBookForm.$invalid" type="button" class="btn btn-primary" ng-click="onAddBook(author, true)">Save changes</button>
             </div>
         </div>
     </div>

@@ -130,25 +130,23 @@ export default function bookController($scope, ApiRequestService, toastr){
       const options = {title: $scope.state.bookTitle, authorId: $scope.state.author};
       addingBook(options);
     }
-    else if(book && isAddCall && !isEdit){
+    else if(book && isAddCall && !isEdit){ // open to edit case
       $scope.book = book;
-      getAuthors(() => {
-        console.log('author', $scope.authorList);
-        let pos = 0;
-        $scope.authorList.forEach((item, postition) => {
-          // pos = item.id === book.authorId ? postition : 0;
-          if(item.id === book.authorId) pos = postition;
-        });
-        // console.log('pos',pos);
-        $scope.authorList[pos];
-      });
+      getAuthors();
       $scope.openModal(modalAddBook);
     }
-    else if(book && isAddCall &&  isEdit) {
+    else if(book && isAddCall &&  isEdit) { // edit case
       const options = {id:book.id, title: $scope.state.bookTitle, authorId: $scope.state.author};
-      console.log('options', options);
       addingBook(options);
     }
+  };
+
+  /**
+   * clearSearch - clear the field on search and re build the list
+   */
+  $scope.clearSearch = () => {
+    $scope.book.title = '';
+    $scope.onSearch();
   };
 
   /**
@@ -186,8 +184,7 @@ export default function bookController($scope, ApiRequestService, toastr){
   };
 
   $scope.listBookByAuthor = (author) => {
-    console.log('auhtor', author);
-    const filter = {where:{authorId: author.id}};
+    const filter = {where:{authorId: author}};
     ApiRequestService.getBooks(filter).then(res => {
       $scope.authorBookList = res.data;
     });

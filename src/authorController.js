@@ -52,7 +52,6 @@ export default function authorController($scope, ApiRequestService, toastr){
     $scope.getAuthors($scope.initSkipPagination);
   };
 
-
   /**
    * puAuthor - add or update an Author
    * @param options
@@ -196,6 +195,15 @@ export default function authorController($scope, ApiRequestService, toastr){
   };
 
   /**
+   * clearSearch - clear the field search and rebuild the list
+   */
+  $scope.clearSearch = () => {
+    $scope.author.firstName = '';
+    $scope.author.lastName = '';
+    $scope.callPaginationEvent(0);
+  };
+
+  /**
    * openModal - call modal
    */
   $scope.openModal = (modalId) => {
@@ -208,7 +216,6 @@ export default function authorController($scope, ApiRequestService, toastr){
   $scope.closeModal = (modalId) => {
     $(modalId).modal('hide')
   };
-
 
   // init function calls
   $scope.getAuthors();
