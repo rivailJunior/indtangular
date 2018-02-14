@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f0e56121-6bae-4850-9760-e90acb883d10" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/authorController.js" afterPath="$PROJECT_DIR$/src/authorController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/bookController.js" afterPath="$PROJECT_DIR$/src/bookController.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/routes.js" afterPath="$PROJECT_DIR$/src/routes.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/service/ApiRequestService.js" afterPath="$PROJECT_DIR$/src/service/ApiRequestService.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/author/author.html" afterPath="$PROJECT_DIR$/views/author/author.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/book/book.html" afterPath="$PROJECT_DIR$/views/book/book.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.gitignore" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -48,11 +44,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ApiRequestService.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApiRequestService.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/service/ApiRequestService.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="164">
-              <caret line="13" column="63" lean-forward="false" selection-start-line="13" selection-start-column="63" selection-end-line="13" selection-end-column="63" />
+            <state relative-caret-position="196">
+              <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="bower.json" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bower.json">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="252">
+              <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="28">
+              <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
               <folding />
             </state>
           </provider>
@@ -147,6 +163,7 @@
         <option value="$PROJECT_DIR$/views/author/author.html" />
         <option value="$PROJECT_DIR$/src/authorController.js" />
         <option value="$PROJECT_DIR$/src/service/ApiRequestService.js" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -199,17 +216,6 @@
               <item name="indtangular" type="b2602c69:ProjectViewProjectNode" />
               <item name="indtangular" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="indtangular" type="b2602c69:ProjectViewProjectNode" />
-              <item name="indtangular" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="indtangular" type="b2602c69:ProjectViewProjectNode" />
-              <item name="indtangular" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
@@ -256,12 +262,12 @@
       <option name="presentableId" value="Default" />
       <updated>1518309039487</updated>
       <workItem from="1518309040652" duration="27467000" />
-      <workItem from="1518451195996" duration="47901000" />
+      <workItem from="1518451195996" duration="48551000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75368000" />
+    <option name="totallyTimeSpent" value="76018000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="49" y="-3" width="1317" height="771" extended-state="6" />
@@ -469,14 +475,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/bower.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/public/bootstrap3/js/npm.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -583,8 +581,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/service/ApiRequestService.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="13" column="63" lean-forward="false" selection-start-line="13" selection-start-column="63" selection-end-line="13" selection-end-column="63" />
+        <state relative-caret-position="196">
+          <caret line="14" column="29" lean-forward="true" selection-start-line="14" selection-start-column="29" selection-end-line="14" selection-end-column="29" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bower.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="252">
+          <caret line="18" column="33" lean-forward="false" selection-start-line="18" selection-start-column="33" selection-end-line="18" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="28">
+          <caret line="2" column="5" lean-forward="false" selection-start-line="2" selection-start-column="5" selection-end-line="2" selection-end-column="5" />
           <folding />
         </state>
       </provider>
