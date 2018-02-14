@@ -27,10 +27,7 @@ export default function bookController($scope, ApiRequestService, toastr){
    */
   const createPagination = (bookList) => {
     ApiRequestService.getTotalBook().then(total => {
-      let totalButtons = Math.round(total.data.count / 10);
-      if(bookList) totalButtons = Math.round(bookList.length / 10);
-      const restOf = total.data.count % 10;
-      if(restOf > 0) totalButtons += 1;
+      let totalButtons = Math.ceil(total.data.count / 10);
       const buttons = [];
       for(var i = 0; i < totalButtons; i++){
         buttons.push({
@@ -73,29 +70,6 @@ export default function bookController($scope, ApiRequestService, toastr){
     })
   };
 
-  /**
-   * onAdd - validate input and call service to add a new author
-   */
-  $scope.onAddNew = (author, isCallEdit) => {
-    if (!author && !isCallEdit) {
-      const data = {
-        firstName: $scope.state.firstName,
-        lastName: $scope.state.lastName
-      };
-      putAuthor(data);
-    } else if (author && !isCallEdit){
-      $scope.author = author;
-      $scope.openModal(modalAddId);
-    } else if(author && isCallEdit) {
-      const optUpdate = {
-        id: author.id,
-        firstName: $scope.state.firstName || author.firstName,
-        lastName: $scope.state.lastName || author.lastName
-      };
-      putAuthor(optUpdate);
-    }
-  };
-
   const getAuthors = (_cb) => {
     ApiRequestService.getAuthor().then(res => {
       $scope.authorList = res.data;
@@ -104,6 +78,7 @@ export default function bookController($scope, ApiRequestService, toastr){
   }
 
   const addingBook = (options) => {
+    console.log('options adding', options);
     ApiRequestService.addBook(options).then(() => {
       // $scope.closeModal(modalAddBook);
       $scope.state.bookTitle = '';
@@ -124,11 +99,13 @@ export default function bookController($scope, ApiRequestService, toastr){
   $scope.onAddBook = (book, isAddCall, isEdit) => {
     if(!book && !isAddCall){
       getAuthors();
+      $scope.authorList = $scope.authorList[1];
       $scope.openModal(modalAddBook);
     }
-    else if(book && !isAddCall && !isEdit){
+    else if(book && !isAddCall && !isEdit){ // on creating book
       const options = {title: $scope.state.bookTitle, authorId: $scope.state.author};
       addingBook(options);
+      $scope.listBookByAuthor($scope.state.author);
     }
     else if(book && isAddCall && !isEdit){ // open to edit case
       $scope.book = book;
@@ -136,7 +113,15 @@ export default function bookController($scope, ApiRequestService, toastr){
       $scope.openModal(modalAddBook);
     }
     else if(book && isAddCall &&  isEdit) { // edit case
-      const options = {id:book.id, title: $scope.state.bookTitle, authorId: $scope.state.author};
+      if($scope.state){
+        if($scope.state.bookTitle) book.title = $scope.state.bookTitle;
+        if($scope.state.author) book.authorId = $scope.state.author;
+      }
+      const options = {
+        id: book.id,
+        title: book.title,
+        authorId:book.authorId
+      };
       addingBook(options);
     }
   };
@@ -183,13 +168,16 @@ export default function bookController($scope, ApiRequestService, toastr){
     })
   };
 
+  /**
+   * listBookByAuthor - list all books from that current author
+   * @param author
+   */
   $scope.listBookByAuthor = (author) => {
     const filter = {where:{authorId: author}};
     ApiRequestService.getBooks(filter).then(res => {
       $scope.authorBookList = res.data;
     });
   };
-
 
   /**
    * openModal - call modal

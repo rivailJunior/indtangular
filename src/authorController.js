@@ -27,9 +27,7 @@ export default function authorController($scope, ApiRequestService, toastr){
    */
   const createPagination = () => {
     ApiRequestService.getTotalAuthor().then(total => {
-      let totalButtons = Math.round(total.data.count / 10);
-      const restOf = total.data.count % 10;
-      if(restOf > 0) totalButtons += 1;
+      let totalButtons = Math.ceil(total.data.count / 10);
       const buttons = [];
       for(var i = 0; i < totalButtons; i++){
         buttons.push({

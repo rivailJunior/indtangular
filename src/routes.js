@@ -1,7 +1,7 @@
 routes.$inject = ['$urlRouterProvider','$stateProvider'];
 
 export default function routes($urlRouterProvider, $stateProvider) {
-  $urlRouterProvider.otherwise('/');
+  $urlRouterProvider.otherwise('/author');
 
   $stateProvider
     .state('book', {

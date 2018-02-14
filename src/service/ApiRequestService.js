@@ -40,14 +40,11 @@ export default function ApiRequestService($http) {
   this.getAuthorByName = (firstName, lastName) => {
     let options = {};
     if(firstName && lastName){
-      console.log('if');
       options = {"where": {"or":[{"firstName": {"like": `${firstName}`}}, {"lastName": {"like": `${lastName}`}}]}};
     }
     else if(firstName && !lastName){
-      console.log('else if');
       options = {"where": {"firstName": {"like": `${firstName}`}} };
     } else {
-      console.log('else');
       options = {"where": {"lastName": {"like": `${lastName}`}} };
     }
     options = JSON.stringify(options);

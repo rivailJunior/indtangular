@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">List</li>
-            <li class="breadcrumb-item"><a href="#" ng-click="onAddBook()">Add</a></li>
+            <li class="breadcrumb-item"><a ng-click="onAddBook()">Add Book</a></li>
         </ol>
     </nav>
     <div class="card">
@@ -43,43 +43,6 @@
     </nav>
 </div>
 
-<!-- Modal add -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Adding Auhtor</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="" name="addAuthorForm" class="form-horizontal">
-                    <input type="text" class="form-control"
-                           ng-value="author.firstName"
-                           placeholder="First Name"
-                           name="firstName"
-                           required
-                           ng-model="state.firstName">
-                    <p ng-show="addAuthorForm.firstName.$invalid && !addAuthorForm.firstName.$pristine"></p>
-                    <input type="text" class="form-control m-t-1"
-                           ng-value="author.lastName"
-                           name="lastName"
-                           required
-                           placeholder="Last Name"
-                           ng-model="state.lastName">
-                    <p ng-show="addAuthorForm.lastName.$invalid && !addAuthorForm.lastName.$pristine"></p>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button ng-disabled="addAuthorForm.$invalid" ng-if="!author" type="button" class="btn btn-success" ng-click="onAddNew()">Save</button>
-                <button ng-disabled="addAuthorForm.$valid" ng-if="author" type="button" class="btn btn-success" ng-click="onAddNew(author, true)">Edit</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- Modal add Book -->
 <div class="modal fade" id="modalAddBook" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -104,6 +67,7 @@
                             <select name="authorId"
                                     ng-model="state.author"
                                     class="form-control m-t-1"
+                                    required
                                     ng-change="listBookByAuthor(state.author)"
                             >
                                 <option ng-repeat="author in authorList" value="{{author.id}}">{{author.firstName}}</option>
@@ -127,7 +91,7 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button ng-if="!book" ng-disabled="addBookForm.$invalid" type="button" class="btn btn-primary" ng-click="onAddBook(true)">Save</button>
-                <button ng-if="book"  type="button" class="btn btn-primary" ng-click="onAddBook(book, true, true)">Edit</button>
+                <button ng-if="book" ng-disabled="addBookForm.$pristine"  type="button" class="btn btn-primary" ng-click="onAddBook(book, true, true)">Edit</button>
             </div>
         </div>
     </div>

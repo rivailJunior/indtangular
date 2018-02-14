@@ -2,7 +2,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item active">List</li>
-            <li class="breadcrumb-item"><a href="#" ng-click="openModal('#exampleModal')">Add</a></li>
+            <li class="breadcrumb-item"><a href="#" ng-click="openModal('#exampleModal')">Add Author</a></li>
         </ol>
     </nav>
     <div class="card">
@@ -123,7 +123,7 @@
                         </form>
                     </div>
                     <div class="col-md-12 m-t-1">
-                        <div class="panel panel-default">
+                        <div class="panel panel-default" ng-if="bookList.length > 0">
                             <!-- Default panel contents -->
                             <div class="panel-heading">Auhtor Books</div>
                             <div class="panel-body">
